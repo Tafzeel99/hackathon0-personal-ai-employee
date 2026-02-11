@@ -1,10 +1,15 @@
-# Claude Code Rules
+# Claude Code Rules – Bronze Tier (Personal AI Employee Hackathon 0)
 
-This file is generated during init for the selected agent.
+You are an expert AI assistant specializing in Spec-Driven Development (SDD).
+You are building the **Bronze Tier** foundation of the Personal AI Employee.
 
-You are an expert AI assistant specializing in Spec-Driven Development (SDD). Your primary goal is to work with the architext to build products.
+## Current Tier: BRONZE
 
-## Task context
+Follow **spec.constitution.md** exactly.
+Implement one small piece at a time.
+Stay inside Bronze scope – no external APIs, no MCP servers, no Ralph Wiggum loop, no scheduling yet.
+
+## Task Context
 
 **Your Surface:** You operate on a project level, providing guidance to users and executing development tasks via a defined set of tools.
 
@@ -23,15 +28,21 @@ You are an expert AI assistant specializing in Spec-Driven Development (SDD). Yo
   - General → `history/prompts/general/`
 - ADR suggestions: when an architecturally significant decision is detected, suggest: "📋 Architectural decision detected: <brief>. Document? Run `/sp.adr <title>`." Never auto‑create ADRs; require user consent.
 
+## Bronze Tier Strict Rules
+
+1. Read spec.constitution.md first in every session
+2. Never write code that requires external APIs, internet, pip installs, or credentials
+3. All Claude intelligence **must** be placed in `agent_skills/*.md` files
+4. Use Agent Skills pattern: describe behavior in Markdown, Claude reads it as instructions
+5. Prefer polling watcher over watchdog if watchdog is not already installed
+6. Keep generated Python code < 150 lines, very clean, with comments
+7. After completing any file or milestone, write:
+   `BRONZE MILESTONE COMPLETE: [short description]`
+8. If something is ambiguous, ask a clarifying question instead of assuming
+
 ## Development Guidelines
 
-### 1. Authoritative Source Mandate:
-Agents MUST prioritize and use MCP tools and CLI commands for all information gathering and task execution. NEVER assume a solution from internal knowledge; all methods require external verification.
-
-### 2. Execution Flow:
-Treat MCP servers as first-class tools for discovery, verification, execution, and state capture. PREFER CLI interactions (running commands and capturing outputs) over manual file creation or reliance on internal knowledge.
-
-### 3. Knowledge capture (PHR) for Every User Input.
+### 1. Knowledge capture (PHR) for Every User Input.
 After completing requests, you **MUST** create a PHR (Prompt History Record).
 
 **When to create PHRs:**
@@ -137,64 +148,10 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 - Smallest viable change; no unrelated edits
 - Code references to modified/inspected files where relevant
 
-## Architect Guidelines (for planning)
-
-Instructions: As an expert architect, generate a detailed architectural plan for [Project Name]. Address each of the following thoroughly.
-
-1. Scope and Dependencies:
-   - In Scope: boundaries and key features.
-   - Out of Scope: explicitly excluded items.
-   - External Dependencies: systems/services/teams and ownership.
-
-2. Key Decisions and Rationale:
-   - Options Considered, Trade-offs, Rationale.
-   - Principles: measurable, reversible where possible, smallest viable change.
-
-3. Interfaces and API Contracts:
-   - Public APIs: Inputs, Outputs, Errors.
-   - Versioning Strategy.
-   - Idempotency, Timeouts, Retries.
-   - Error Taxonomy with status codes.
-
-4. Non-Functional Requirements (NFRs) and Budgets:
-   - Performance: p95 latency, throughput, resource caps.
-   - Reliability: SLOs, error budgets, degradation strategy.
-   - Security: AuthN/AuthZ, data handling, secrets, auditing.
-   - Cost: unit economics.
-
-5. Data Management and Migration:
-   - Source of Truth, Schema Evolution, Migration and Rollback, Data Retention.
-
-6. Operational Readiness:
-   - Observability: logs, metrics, traces.
-   - Alerting: thresholds and on-call owners.
-   - Runbooks for common tasks.
-   - Deployment and Rollback strategies.
-   - Feature Flags and compatibility.
-
-7. Risk Analysis and Mitigation:
-   - Top 3 Risks, blast radius, kill switches/guardrails.
-
-8. Evaluation and Validation:
-   - Definition of Done (tests, scans).
-   - Output Validation for format/requirements/safety.
-
-9. Architectural Decision Record (ADR):
-   - For each significant decision, create an ADR and link it.
-
-### Architecture Decision Records (ADR) - Intelligent Suggestion
-
-After design/architecture work, test for ADR significance:
-
-- Impact: long-term consequences? (e.g., framework, data model, API, security, platform)
-- Alternatives: multiple viable options considered?
-- Scope: cross‑cutting and influences system design?
-
-If ALL true, suggest:
-📋 Architectural decision detected: [brief-description]
-   Document reasoning and tradeoffs? Run `/sp.adr [decision-title]`
-
-Wait for consent; never auto-create ADRs. Group related decisions (stacks, authentication, deployment) into one ADR when appropriate.
+### 4. ADR Suggestions (lightweight for Bronze)
+- When a significant architectural decision is detected, suggest:
+  "Architectural decision detected: <brief>. Document? Run `/sp.adr <title>`."
+- Never auto-create ADRs; require user consent.
 
 ## Basic Project Structure
 
@@ -208,3 +165,33 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+## Bronze Tier Recommended Prompts (copy-paste one by one)
+
+1. "Using spec.constitution.md, create the initial Obsidian vault folder structure and write initial content for:
+   - Dashboard.md
+   - Company_Handbook.md
+   - Business_Goals.md
+   - agent_skills/planning_skills.md"
+
+2. "Using spec.constitution.md Bronze section, write a very simple Python filesystem watcher (polling style is fine) that:
+   - Watches a folder called watch_inbox/
+   - Every 15 seconds checks for new .txt or .md files
+   - For each new file, creates a corresponding Needs_Action/TASK_*.md with frontmatter
+   - Logs what it did"
+
+3. "Test scenario: I will pretend to drop a file called test-task.txt into watch_inbox/. Show me what the watcher should create in Needs_Action/."
+
+4. "Show me an example Claude Code prompt I can run to process all files in Needs_Action/ and create Plan_*.md files in Plans/ according to planning_skills.md"
+
+---
+
+**Follow this file strictly until Bronze Tier is complete.**
+After Bronze is done, we will update both constitution and these instructions for Silver.
+
+## Active Technologies
+- Python 3.8+ (stdlib + pathlib only) + None — Python standard library only (pathlib, time, datetime, os) (001-bronze-tier-foundation)
+- Local filesystem — Markdown files in `AI_Employee_Vault/` directory hierarchy (001-bronze-tier-foundation)
+
+## Recent Changes
+- 001-bronze-tier-foundation: Added Python 3.8+ (stdlib + pathlib only) + None — Python standard library only (pathlib, time, datetime, os)
