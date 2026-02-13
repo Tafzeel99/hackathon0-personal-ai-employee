@@ -19,3 +19,7 @@ Thumbs.db
 # Environment
 .env
 .env.*
+
+# Google OAuth (Silver Tier)
+credentials.json
+token.json
