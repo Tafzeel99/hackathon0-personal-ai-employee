@@ -3,7 +3,9 @@
     "allow": [
       "Bash(python3:*)",
       "Bash(xargs:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(python -c:*)",
+      "Bash(python orchestrator.py:*)"
     ]
   }
 }
