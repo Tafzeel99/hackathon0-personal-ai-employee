@@ -1,7 +1,8 @@
-# Silver Tier – Hackathon 0 – Personal AI Employee
+# Gold Tier – Hackathon 0 – Personal AI Employee
 # Generated following spec.constitution.md
-"""CEO Briefing generator: summarises Done/ tasks, pending items, suggestions.
-Usage: python briefing_generator.py [--dry-run]"""
+"""CEO Briefing generator (Silver legacy): summarises Done/ tasks, pending items.
+Usage: python briefing_generator.py [--dry-run]
+Note: Superseded by audit_generator.py in Gold Tier for weekly audits."""
 import argparse, os, re
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
