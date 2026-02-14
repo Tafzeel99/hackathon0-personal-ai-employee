@@ -19,7 +19,11 @@ Thumbs.db
 # Environment
 .env
 .env.*
+!.env.example
 
-# Google OAuth (Silver Tier)
+# Google OAuth
 credentials.json
 token.json
+
+# PID files (Gold Tier watchdog)
+*.pid

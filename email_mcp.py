@@ -1,4 +1,4 @@
-# Silver Tier – Hackathon 0 – Personal AI Employee
+# Gold Tier – Hackathon 0 – Personal AI Employee
 # Generated following spec.constitution.md
 # Usage: python email_mcp.py --to X --subject Y --body Z [--draft-only] [--dry-run]
 """Email MCP: sends or drafts Gmail messages after HITL approval."""
@@ -17,6 +17,7 @@ try:
 except ImportError:
     pass
 from log_utils import log_event
+from retry_handler import retry_call
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.send",
            "https://www.googleapis.com/auth/gmail.compose"]
@@ -52,21 +53,29 @@ def build_message(to, subject, body):
 
 
 def send_email(service, to, subject, body):
-    """Send an email via Gmail API."""
+    """Send an email via Gmail API with retry on transient errors."""
     message = build_message(to, subject, body)
-    result = service.users().messages().send(userId="me", body=message).execute()
+
+    def _send():
+        return service.users().messages().send(userId="me", body=message).execute()
+
+    result = retry_call(_send, source="email_mcp", task_ref=f"send:{to}")
     return {"status": "sent", "to": to, "subject": subject, "message_id": result.get("id", "")}
 
 
 def create_draft(service, to, subject, body):
-    """Create a draft in Gmail."""
+    """Create a draft in Gmail with retry on transient errors."""
     message = build_message(to, subject, body)
-    result = service.users().drafts().create(userId="me", body={"message": message}).execute()
+
+    def _draft():
+        return service.users().drafts().create(userId="me", body={"message": message}).execute()
+
+    result = retry_call(_draft, source="email_mcp", task_ref=f"draft:{to}")
     return {"status": "drafted", "to": to, "subject": subject, "draft_id": result.get("id", "")}
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Email MCP – Silver Tier")
+    ap = argparse.ArgumentParser(description="Email MCP – Gold Tier")
     ap.add_argument("--to", required=True, help="Recipient email address")
     ap.add_argument("--subject", required=True, help="Email subject line")
     ap.add_argument("--body", required=True, help="Email body text")
@@ -79,7 +88,7 @@ def main():
     if dry_run:
         result = {"status": "dry_run", "to": args.to, "subject": args.subject}
         log_event("email_dry_run", "email_mcp", "dry_run",
-                  details=f"To: {args.to}, Subject: {args.subject}")
+                  details={"to": args.to, "subject": args.subject})
         print(json.dumps(result))
         return
 
@@ -91,16 +100,16 @@ def main():
         if args.draft_only:
             result = create_draft(service, args.to, args.subject, args.body)
             log_event("email_drafted", "email_mcp", "success",
-                      details=f"To: {args.to}, Subject: {args.subject}")
+                      details={"to": args.to, "subject": args.subject})
         else:
             result = send_email(service, args.to, args.subject, args.body)
             log_event("email_sent", "email_mcp", "success",
-                      details=f"To: {args.to}, Subject: {args.subject}")
+                      details={"to": args.to, "subject": args.subject})
         print(json.dumps(result))
     except Exception as e:
         result = {"status": "error", "error": str(e), "to": args.to, "subject": args.subject}
         log_event("email_failed", "email_mcp", "failure",
-                  details=f"To: {args.to}, Error: {e}")
+                  details={"to": args.to, "error": str(e)[:200]})
         print(json.dumps(result))
         sys.exit(1)
 
