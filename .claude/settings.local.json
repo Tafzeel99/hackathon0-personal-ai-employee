@@ -5,7 +5,11 @@
       "Bash(xargs:*)",
       "Bash(bash:*)",
       "Bash(python -c:*)",
-      "Bash(python orchestrator.py:*)"
+      "Bash(python orchestrator.py:*)",
+      "Bash(python social_facebook_mcp.py:*)",
+      "Bash(python:*)",
+      "Bash(python odoo_mcp.py:*)",
+      "Bash(git add:*)"
     ]
   }
 }

@@ -1,0 +1,12 @@
+{"timestamp": "2026-02-15T00:42:56.741606+05:00", "action": "watcher_started", "source": "orchestrator", "result": "success", "details": "DRY-RUN"}
+{"timestamp": "2026-02-15T00:42:56.939108+05:00", "action": "odoo_list_invoices", "source": "odoo_mcp", "result": "dry_run", "details": {"action": "list_invoices", "mcp_params": {"days": 7}}}
+{"timestamp": "2026-02-15T00:42:57.017134+05:00", "action": "odoo_list_payments", "source": "odoo_mcp", "result": "dry_run", "details": {"action": "list_payments", "mcp_params": {"days": 7}}}
+{"timestamp": "2026-02-15T00:42:57.109106+05:00", "action": "audit_generated", "source": "audit_generator", "result": "dry_run", "details": {"task_count": 3, "revenue_total": 0, "path": "Audit_2026-02-15.md"}}
+{"timestamp": "2026-02-15T00:45:29.902680+05:00", "action": "fb_fetch_activity", "source": "social_facebook_mcp", "result": "failure", "details": {"error": "FB_PAGE_ACCESS_TOKEN and FB_PAGE_ID must be set in .env"}}
+{"timestamp": "2026-02-15T00:50:00.785299+05:00", "action": "fb_fetch_activity", "source": "social_facebook_mcp", "result": "dry_run", "details": {"action": "fetch_activity", "social_post_id": null, "mcp_params": {"content": ""}}}
+{"timestamp": "2026-02-15T00:50:00.913268+05:00", "action": "ig_post", "source": "social_instagram_mcp", "result": "dry_run", "details": {"action": "post", "social_post_id": null, "mcp_params": {"content": "Test caption"}}}
+{"timestamp": "2026-02-15T00:50:01.008345+05:00", "action": "x_post", "source": "social_x_mcp", "result": "dry_run", "details": {"action": "post", "social_post_id": null, "mcp_params": {"content": "Test tweet"}}}
+{"timestamp": "2026-02-15T00:50:01.103462+05:00", "action": "odoo_list_invoices", "source": "odoo_mcp", "result": "dry_run", "details": {"action": "list_invoices", "mcp_params": {}}}
+{"timestamp": "2026-02-15T00:50:14.828315+05:00", "action": "odoo_list_invoices", "source": "odoo_mcp", "result": "dry_run", "details": {"action": "list_invoices", "mcp_params": {"days": 7}}}
+{"timestamp": "2026-02-15T00:50:14.924761+05:00", "action": "odoo_list_payments", "source": "odoo_mcp", "result": "dry_run", "details": {"action": "list_payments", "mcp_params": {"days": 7}}}
+{"timestamp": "2026-02-15T00:50:15.015555+05:00", "action": "audit_generated", "source": "audit_generator", "result": "dry_run", "details": {"task_count": 3, "revenue_total": 0, "path": "Audit_2026-02-15.md"}}
